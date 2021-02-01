@@ -1,0 +1,14 @@
+{
+    "name": "signed_url_s3",
+    "version": "1.0.0",
+    "description": "Generates signed URL for S3 image upload",
+    "main": "index.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "Raj Miglani, AWS Serverless",
+    "devDependencies": {
+      "aws-sdk": "^2.749.0"
+    }
+  }

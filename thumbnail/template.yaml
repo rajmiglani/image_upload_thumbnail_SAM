@@ -1,0 +1,48 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  thumbnail
+
+Resources:
+  # HTTP API
+  MyApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      # CORS configuration - this is open for development only and should be restricted in prod.
+      # See https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-property-httpapi-httpapicorsconfiguration.html   
+      CorsConfiguration:
+        AllowMethods:
+          - GET
+          - POST
+          - DELETE
+          - OPTIONS
+        AllowHeaders:
+          - "*"   
+        AllowOrigins: 
+          - "*"     
+
+  
+
+  ## Lambda functions
+  UploadRequestFunction:
+    # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Type: AWS::Serverless::Function 
+    Properties:
+      CodeUri: src/handlers/
+      Handler: app.handler
+      Runtime: nodejs12.x
+      Timeout: 3
+      MemorySize: 128
+      Events:
+        UploadAssetAPI:
+          Type: HttpApi
+          Properties:
+            Path: /thumbnail
+            Method: get
+            ApiId: !Ref MyApi  
+
+## Take a note of the outputs for deploying the workflow templates in this sample application
+Outputs:
+  APIendpoint:
+    Description: "HTTP API endpoint URL"
+    Value: !Sub "https://${MyApi}.execute-api.${AWS::Region}.amazonaws.com"
