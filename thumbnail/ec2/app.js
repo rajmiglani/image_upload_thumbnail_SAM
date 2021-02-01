@@ -7,8 +7,8 @@ const S3 = new AWS.S3({
 
 const Sharp = require('sharp');
 
-const SOURCE_BUCKET = "upload-image-s3uploadbucket-zbdh3mxddnsc";
-const DEST_BUCKET = "thumbnailbucket567";
+const SOURCE_BUCKET = process.env.SOURCE;
+const DEST_BUCKET = process.env.DEST;
                                     
 module.exports = {
   handler : async function (event) {
